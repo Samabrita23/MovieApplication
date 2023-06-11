@@ -2,14 +2,21 @@ import React from 'react';
 import PageHeader from './Components/PageHeader';
 // import './App.css';
 
+import logo from './logo.svg';
+import './App.css';
+
+
 function App() {
   return (
     <div className="App">
+
       <PageHeader />
 
 
 
-      {/* <header className="App-header">
+       {/* <header className="App-header">
+
+      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
@@ -22,7 +29,9 @@ function App() {
         >
           Learn React
         </a>
+
       </header> */}
+
     </div>
   );
 }
