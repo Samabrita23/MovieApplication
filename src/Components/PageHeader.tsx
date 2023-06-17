@@ -1,14 +1,13 @@
 // PageHeader.tsx
-import React from 'react';
 import '../Styles/PageHeader.css';
-import logo from '../Assets/logo.svg';
+import Logo from '../Assets/Logo.svg'
 
  const PageHeader = () => {
   return (
     <header className="page-header">
       <div className="logo">
         <svg width="100" height="50" viewBox="0 0 100 50">
-          <image href={logo} width="100" height="50" />
+          <image href={Logo} width="100" height="50" />
         </svg>
       </div>
       <nav className="navigation">

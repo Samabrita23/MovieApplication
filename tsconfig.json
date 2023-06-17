@@ -18,13 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-<<<<<<< HEAD
     "jsx": "react-jsx"
-=======
-    "jsx": "preserve"
->>>>>>> bfa7944fc2b998f9aaee4e1b81b94b2bdccda1d7
-  },
-  "include": [
-    "src"
-  ]
+    },
+  "include": ["src"]
 }

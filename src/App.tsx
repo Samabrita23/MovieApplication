@@ -1,9 +1,8 @@
 import React from 'react';
 import PageHeader from './Components/PageHeader';
 // import './App.css';
-
-import logo from './logo.svg';
 import './App.css';
+import WelcomeBanner from './Components/WelcomeBanner';
 
 
 function App() {
@@ -11,6 +10,7 @@ function App() {
     <div className="App">
 
       <PageHeader />
+      <WelcomeBanner />
 
 
 
