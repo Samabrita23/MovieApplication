@@ -1,0 +1,122 @@
+.trending-widget {
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    justify-content: center;
+    align-content: flex-start;
+    width: 100%;
+    padding: 20px 0px 0px;
+    font-family: sans-serif;
+  }
+  
+  .trending-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 4rem;
+  }
+  
+  .trending-header h2 {
+    font-weight: 700;
+    font-size: 30px;
+    color: #000000;
+    margin-right: 20px;
+    white-space: nowrap;
+  }
+  
+  .toggle-buttons {
+    display: flex;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: center;
+    border: 2px solid #490CF7;
+    border-radius: 18px;
+  }
+  
+  .toggle-buttons button {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 20px;
+    background-color: #fff;
+    border: #490CF7;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggle-buttons button.active {
+    background-color: #210E97;
+    border: #490CF7;
+    border-radius: 15px;
+    color: #fff;
+  }
+  
+  .movie-list {
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    width: 100%;
+    max-width: 100%;
+    /* max-width: 1740px;  */
+    margin: 6px 7px;
+  }
+  
+  .movie-card {
+    padding: 0.5rem;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(19, 11, 44, 0.1);
+    min-width: 200px;
+    flex: 0 0 auto;
+    margin-right: 20px;
+    width: 5rem; 
+    height: 15rem;;
+    left: 90px;
+    background: #e6daf9;
+    border-radius: 15px;
+  }
+  
+  .movie-poster-image {
+    height: 100%; 
+    width: 100%;
+    border-radius: 15px;
+  }
+  
+  .movie-details {
+    display: flex;
+    flex-direction: column;
+    left: 10px;
+    margin-top: 5px;
+  }
+  
+  .movie-vote {
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  
+  .movie-title {
+    text-align: left;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 41px;
+    color: #122199;
+    margin: 0 0;
+    overflow-wrap: break-word;
+    margin-bottom: 2px;
+  }
+  
+  .movie-release-date {
+    margin: 1px;;
+    text-align: left;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    color: #000000;
+    font-size: 16px;
+  }

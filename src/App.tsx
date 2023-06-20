@@ -1,17 +1,23 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PageHeader from './Components/PageHeader';
 // import './App.css';
 import './App.css';
 import WelcomeBanner from './Components/WelcomeBanner';
+import TrendingWidget from './Components/TrendingWidget';
+import MovieDetailPage from './Components/MovieDetailPage';
 
 
 function App() {
   return (
-    <div className="App">
-
-      <PageHeader />
-      <WelcomeBanner />
-
+    <Router>
+      <div className="App">
+        <PageHeader />
+        <WelcomeBanner />
+        <Routes>
+          <Route path="/" Component={TrendingWidget} />
+          <Route path="/movie/:id" Component={MovieDetailPage} />
+        </Routes>
 
 
        {/* <header className="App-header">
@@ -33,6 +39,7 @@ function App() {
       </header> */}
 
     </div>
+       </Router>
   );
 }
 

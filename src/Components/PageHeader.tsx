@@ -1,8 +1,8 @@
-// PageHeader.tsx
 import '../Styles/PageHeader.css';
 import Logo from '../Assets/Logo.svg'
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importing Bootstrap CSS
 
- const PageHeader = () => {
+const PageHeader = () => {
   return (
     <header className="page-header">
       <div className="logo">
@@ -10,20 +10,20 @@ import Logo from '../Assets/Logo.svg'
           <image href={Logo} width="100" height="50" />
         </svg>
       </div>
-      <nav className="navigation">
-        <ul>
-          <li><a href="#">Movies</a></li>
-          <li><a href="#">TV Shows</a></li>
-          <li><a href="#">People</a></li>
-          <li><a href="#">More</a></li>
+      <nav className="navigation d-flex d-lg-flex"> 
+        <ul className="navbar-nav">
+          <li className="nav-item"><a className="nav-link" href="#">Movies</a></li>
+          <li className="nav-item"><a className="nav-link" href="#">TV Shows</a></li>
+          {/* <li className="nav-item"><a className="nav-link" href="#">People</a></li>
+          <li className="nav-item"><a className="nav-link" href="#">More</a></li> */}
         </ul>
       </nav>
       <div className="user-actions">
-        <a href="#">Login</a>
-        <a href="#">Join Us</a>
-        {/* <button><i className="fa fa-search"></i></button> */}
+        <a href="#" className="btn btn-primary">Login</a>
+        <a href="#" className="btn btn-secondary">Join Us</a>
       </div>
     </header>
   );
 };
- export default PageHeader;
+
+export default PageHeader;
