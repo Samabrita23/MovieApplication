@@ -5,20 +5,23 @@
     justify-content: center;
     align-content: flex-start;
     width: 100%;
-    padding: 20px 0px 0px;
+    padding-top: 3rem;
     font-family: sans-serif;
+    margin-left: 3rem;
+    margin-right: 3rem;
   }
   
   .trending-header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: 4rem;
+    padding-bottom: 2rem;
+    /* margin-left: 3rem; */
   }
   
   .trending-header h2 {
     font-weight: 700;
-    font-size: 30px;
+    font-size: 25px;
     color: #000000;
     margin-right: 20px;
     white-space: nowrap;
@@ -37,7 +40,7 @@
   .toggle-buttons button {
     font-size: 18px;
     font-weight: 700;
-    padding: 10px 20px;
+    padding: 5px 15px;
     background-color: #fff;
     border: #490CF7;
     border-radius: 15px;
@@ -70,7 +73,7 @@
     padding: 0.5rem;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(19, 11, 44, 0.1);
-    min-width: 200px;
+    min-width: 180px;
     flex: 0 0 auto;
     margin-right: 20px;
     width: 5rem; 
@@ -94,17 +97,18 @@
   }
   
   .movie-vote {
+    padding-top: 1rem;
     text-align: left;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 2px;
   }
   
   .movie-title {
-    text-align: left;
-    font-weight: 800;
     font-size: 18px;
-    line-height: 41px;
+    text-align: left;
+    font-weight: 600;
+    line-height: 30px;
     color: #122199;
     margin: 0 0;
     overflow-wrap: break-word;
@@ -112,11 +116,58 @@
   }
   
   .movie-release-date {
-    margin: 1px;;
+    margin: 1px;
     text-align: left;
     font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
     color: #000000;
-    font-size: 16px;
+    font-size: 15px;
   }
+
+  /* Mobile devices (320px - 480px) */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .trending-widget {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .trending-header {
+    margin-left: 1rem;
+  }
+
+  .movie-card {
+    width: auto;
+    height: 10rem;
+  }
+
+  .movie-details {
+    left: 5px;
+  }
+
+  .movie-title {
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .movie-release-date {
+    font-size: 13px;
+  }
+}
+
+/* iPads, Tablets (481px - 768px) */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .trending-widget {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .trending-header {
+    margin-left: 2rem;
+  }
+
+  .movie-card {
+    width: auto;
+    height: 12rem;
+  }
+}
