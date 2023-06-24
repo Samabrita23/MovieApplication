@@ -1,7 +1,8 @@
 
+const apiKey= '7f2bf16398d509aab86dbd7043d159c1';
 
-// Interface for the Trending movie object
-export interface Trending {
+// Interface for the movie object
+export interface posterCards {
   id: number;
   title: string;
   release_date: string;
@@ -12,7 +13,7 @@ export interface Trending {
 }
 
 // Fetches trending movies based on the toggle (either 'today' or 'week')
-export const fetchMovies = async (toggle: string): Promise<Trending[]> => {
+export const fetchTrending = async (toggle: string): Promise<posterCards[]> => {
   try {
     // Send a GET request to the appropriate API endpoint based on the toggle
     const response = await fetch(
@@ -29,6 +30,23 @@ export const fetchMovies = async (toggle: string): Promise<Trending[]> => {
     return [];
   }
 };
+
+export const fetchPopular = async (criteria: string): Promise<posterCards[]> => {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${criteria}&api_key=${apiKey}`
+    );
+    // Parse the response as JSON
+    const data = await response.json();
+    // Return the array of fetched movies
+    return data.results;
+  } catch (error) {
+    console.log('Error fetching movies:', error);
+    return [];
+  }
+};
+
+
 
 // Fetches movie details based on the provided movieId
 export const fetchMovieDetails = async (movieId: string | number): Promise<any> => {

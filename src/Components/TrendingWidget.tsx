@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styles/TrendingWidget.css';
-import { Trending, fetchMovies } from '../Services/Api';
+import { posterCards, fetchTrending } from '../Services/Api';
 
 // Component to display a trending movie widget
 const TrendingWidget: React.FunctionComponent = () => {
   // State variables
-  const [movies, setMovies] = useState<Trending[]>([]); // Stores the list of trending movies
+  const [movies, setMovies] = useState<posterCards[]>([]); // Stores the list of trending movies
   const [selectedToggle, setSelectedToggle] = useState('today'); // Stores the selected toggle option
 
   // Fetch movies when the selected toggle option changes
@@ -16,7 +16,7 @@ const TrendingWidget: React.FunctionComponent = () => {
 
   // Fetches movies based on the selected toggle option
   const fetchData = async (toggle: string) => {
-    const data = await fetchMovies(toggle); // Calls the fetchMovies function from the API service
+    const data = await fetchTrending(toggle); // Calls the fetchMovies function from the API service
     setMovies(data); // Updates the movies state with the fetched data
   };
 

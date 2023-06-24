@@ -5,7 +5,9 @@ import PageHeader from './Components/PageHeader';
 import './App.css';
 import WelcomeBanner from './Components/WelcomeBanner';
 import TrendingWidget from './Components/TrendingWidget';
-import MovieDetailPage from './Components/MovieDetailPage';
+// import MovieDetailPage from './Components/MovieDetailPage';
+import LatestTrailers from './Components/LatestTrailers';
+import WhatsPopularWidget from './Components/WhatsPopularWidget';
 
 
 function App() {
@@ -16,8 +18,10 @@ function App() {
         <WelcomeBanner />
         <Routes>
           <Route path="/" Component={TrendingWidget} />
-          <Route path="/movie/:id" Component={MovieDetailPage} />
+          {/* <Route path="/movie/:id" Component={MovieDetailPage} /> */}
         </Routes>
+        <LatestTrailers />
+        <WhatsPopularWidget/>
 
 
        {/* <header className="App-header">
