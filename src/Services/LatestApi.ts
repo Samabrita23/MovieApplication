@@ -1,18 +1,9 @@
+import { posterCards } from "./Api";
 const apiKey = '7f2bf16398d509aab86dbd7043d159c1';
 
-// Interface for the Movie object
-export interface Movie {
-  id: number;
-  title: string;
-  release_date: string;
-  vote_average: number;
-  poster_path: string;
-  media_type: string;
-  genre_ids: number[];
-}
 
 // Fetches movies based on the provided criteria
-export const fetchMovies = async (criteria: string): Promise<Movie[]> => {
+export const fetchMovies = async (criteria: string, toggle: string): Promise<posterCards[]> => {
   try {
     // Send a GET request to the appropriate API endpoint based on the criteria
     const response = await fetch(
@@ -20,8 +11,22 @@ export const fetchMovies = async (criteria: string): Promise<Movie[]> => {
     );
     // Parse the response as JSON
     const data = await response.json();
-    // Return the array of fetched movies
-    return data.results;
+  
+    // Modify the fetched data based on the toggle
+    const modifiedData: posterCards[] = data.results.map((movie: posterCards) => {
+      if (toggle === 'onTv') {
+        return {
+          ...movie,
+          title: movie.name,
+          release_date: movie.first_air_date,
+        };
+      }
+      return movie;
+    });
+
+    // Return the modified array of fetched movies/tv shows
+    return modifiedData;
+
   } catch (error) {
     console.log('Error fetching movies:', error);
     return [];
@@ -42,6 +47,8 @@ export const fetchVideoDetails = async (id: number, mediaType: string): Promise<
       (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
     );
     return trailers;
+
+
   } catch (error) {
     console.log('Error fetching video details:', error);
     return [];

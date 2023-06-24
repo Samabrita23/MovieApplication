@@ -8,6 +8,7 @@ import TrendingWidget from './Components/TrendingWidget';
 // import MovieDetailPage from './Components/MovieDetailPage';
 import LatestTrailers from './Components/LatestTrailers';
 import WhatsPopularWidget from './Components/WhatsPopularWidget';
+import FreeToWatchWidget from './Components/FreeToWatchWidget';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         </Routes>
         <LatestTrailers />
         <WhatsPopularWidget/>
+        <FreeToWatchWidget/>
 
 
        {/* <header className="App-header">

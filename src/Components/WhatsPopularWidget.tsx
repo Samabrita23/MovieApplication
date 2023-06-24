@@ -30,7 +30,7 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
     }
 
     // Fetch movies from the API based on the criteria
-    const fetchedMovies = await fetchPopular(criteria);
+    const fetchedMovies = await fetchPopular(criteria, toggle);
     setMovies(fetchedMovies);
   };
 
@@ -89,7 +89,7 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
       </div>
       <div className="itemCards">
         {movies.map((movie) => (
-        <>
+        <React.Fragment key={movie.id}>
           <Link to={`/movies/${movie.id}`} key={movie.id} className="itemCard">
             <img
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
@@ -102,7 +102,7 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
               <p>{formatReleaseDate(movie.release_date)}</p>
             </div>
           </Link>
-          </>
+          </React.Fragment>
         ))}
       </div>
     </div>

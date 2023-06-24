@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Movie, fetchMovies, fetchVideoDetails } from '../Services/LatestApi';
+import { fetchMovies, fetchVideoDetails } from '../Services/LatestApi';
 import '../Styles/LatestTrailer.css';
+import { posterCards } from '../Services/Api';
 
 interface Trailer {
   id: string;
@@ -10,7 +11,7 @@ interface Trailer {
 
 const LatestTrailers: React.FC = () => {
   const [toggle, setToggle] = useState('streaming'); // State for toggle button
-  const [movies, setMovies] = useState<Movie[]>([]); // State for fetched movies
+  const [movies, setMovies] = useState<posterCards[]>([]); // State for fetched movies
   const [selectedTrailer, setSelectedTrailer] = useState<Trailer | null>(null); // State for selected trailer
   const [isModalOpen, setIsModalOpen] = useState(false); // State for modal window
 
@@ -34,7 +35,7 @@ const LatestTrailers: React.FC = () => {
     }
 
     // Fetch movies from the API based on the criteria
-    const fetchedMovies = await fetchMovies(criteria);
+    const fetchedMovies = await fetchMovies(criteria, toggle);
     setMovies(fetchedMovies);
   };
 
@@ -132,16 +133,22 @@ const LatestTrailers: React.FC = () => {
         </div>
       </div>
       {renderTrailers()}
-      {selectedTrailer && (
-        <div className={`modal ${isModalOpen ? 'open' : ''}`} onClick={handleModalOpen}>
-          <iframe
-            title={selectedTrailer.name}
-            width="560"
-            height="315"
-            src={`https://www.youtube.com/embed/${selectedTrailer.key}`}
-            frameBorder="0"
-            allowFullScreen
-          ></iframe>
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <button className="close-button" onClick={handleModalOpen}>
+              <span className="close-icon"></span>
+            </button>
+            {selectedTrailer && (
+              <iframe
+                title="trailer"
+                className="trailer-iframe"
+                src={`https://www.youtube.com/embed/${selectedTrailer.key}`}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>
+            )}
+          </div>
         </div>
       )}
     </div>

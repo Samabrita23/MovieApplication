@@ -4,8 +4,10 @@ const apiKey= '7f2bf16398d509aab86dbd7043d159c1';
 // Interface for the movie object
 export interface posterCards {
   id: number;
+  name:string;
   title: string;
   release_date: string;
+  first_air_date:string;
   vote_average: number;
   poster_path: string;
   media_type: string;
@@ -23,28 +25,95 @@ export const fetchTrending = async (toggle: string): Promise<posterCards[]> => {
     );
     // Parse the response as JSON
     const data = await response.json();
-    // Return the array of fetched trending movies
-    return data.results;
+
+    // Modify the fetched data based on the criteria
+    const modifiedData: posterCards[] = data.results.map((movie: posterCards) => {
+      if (movie.media_type === 'tv') {
+        return {
+          ...movie,
+          title: movie.name,
+          release_date: movie.first_air_date,
+        };
+      }
+      return movie;
+    });
+
+    // Return the modified array of fetched trending movies
+    return modifiedData;
   } catch (error) {
-    console.log('Error fetching movies:', error);
+    console.log('Error fetching Trending show:', error);
     return [];
   }
 };
 
-export const fetchPopular = async (criteria: string): Promise<posterCards[]> => {
+
+
+
+export const fetchPopular = async (criteria: string, toggle: string): Promise<posterCards[]> => {
   try {
     const response = await fetch(
       `https://api.themoviedb.org/3/${criteria}&api_key=${apiKey}`
     );
     // Parse the response as JSON
     const data = await response.json();
-    // Return the array of fetched movies
-    return data.results;
+
+    // Modify the fetched data based on the toggle
+    const modifiedData: posterCards[] = data.results.map((movie: posterCards) => {
+      if (toggle === 'onTv') {
+        return {
+          ...movie,
+          title: movie.name,
+          release_date: movie.first_air_date,
+        };
+      }
+      return movie;
+    });
+
+    // Return the modified array of fetched movies/tv shows
+    return modifiedData;
   } catch (error) {
-    console.log('Error fetching movies:', error);
+    console.log('Error fetching Popular show:', error);
     return [];
   }
 };
+
+
+
+
+
+
+
+export const fetchFree = async (criteria: string, selectedToggle: string): Promise<posterCards[]> => {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${criteria}&api_key=${apiKey}`
+    );
+    const data = await response.json();
+     // Modify the fetched data based on the toggle
+     const modifiedData: posterCards[] = data.results.map((movie: posterCards) => {
+      if (selectedToggle === 'Tv') {
+        return {
+          ...movie,
+          title: movie.name,
+          release_date: movie.first_air_date,
+        };
+      }
+      return movie;
+    });
+
+    return modifiedData;
+
+  } catch (error) {
+    console.log ('Error fetching Free to watch show:', error);
+    return [];
+  }
+};
+
+
+
+
+
+
 
 
 
