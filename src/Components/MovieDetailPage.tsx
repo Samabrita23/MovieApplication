@@ -1,140 +1,115 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { fetchMovieDetails } from '../Services/TrendingApi';
-// import PageHeader from './PageHeader';
-// // import PageFooter from './PageFooter'; - Commented out, not being used
-// import '../Styles/MovieDetailPage.css';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link} from 'react-router-dom';
+import { fetchMovieDetails, fetchTvDetails } from '../Services/Api';
+import '../Styles/MovieDetailPage.css';
 
-// interface MovieDetailParams {
-//   movieId: string;
-//   [key: string]: string | undefined;
-// }
+interface MovieDetailPageProps {
+  mediaType: string;
+}
 
-// const MovieDetailPage: React.FunctionComponent = () => {
-//   // Extract the "movieId" from the URL parameters using the "useParams" hook
-//   const { movieId } = useParams<MovieDetailParams>();
+interface MovieDetails {
+  id: number;
+  title: string;
+  release_date: string;
+  first_air_date: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+  media_type: string;
+  genre_ids: number[];
+  tagline: string;
+  overview: string;
+  status: string;
+  originalLanguage: string;
+  budget: number;
+  revenue: number;
+  number_of_episodes: number;
+  number_of_seasons: number;
+}
 
-//   // State to store the movie data
-//   const [movie, setMovie] = useState<any>(null);
+const MovieDetailPage: React.FC<MovieDetailPageProps> = ({ mediaType }) => {
+  const { id } = useParams<{ id: string }>();
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
 
-//   useEffect(() => {
-//     // Fetch the movie details when the component mounts
-//     fetchMovie();
-//   }, []);
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        let details: MovieDetails | null = null;
+        if (mediaType === 'movie') {
+          details = await fetchMovieDetails(id || '');
+        } else if (mediaType === 'tv') {
+          details = await fetchTvDetails(id || '');
+        }
+        setMovieDetails(details);
+      } catch (error) {
+        console.log('Error fetching movie details:', error);
+      }
+    };
 
-//   const fetchMovie = async () => {
-//     try {
-//       if (movieId) {
-//         const data = await fetchMovieDetails(movieId);
-//         setMovie(data);
-//       }
-//     } catch (error) {
-//       console.log('Error fetching movie details:', error);
-//     }
-//   };
+    fetchDetails();
+  }, [id, mediaType]);
 
-//   // If movie data is not available, show a loading message
-//   if (!movie) {
-//     return <div>Loading...</div>;
-//   }
+  if (!movieDetails) {
+    return <div>Loading...</div>;
+  }
 
-//   // Render the movie details
-//   return (
-//     <div className="movie-detail-page">
-//       <PageHeader />
-//       <div className="movie-banner" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})` }}>
-//         <div className="movie-details">
-//           <div className="movie-poster-card">
-//             <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-//           </div>
-//           <div className="movie-info">
-//             <h1 className="movie-title">{movie.title} ({movie.release_date.substring(0, 4)})</h1>
-//             <div className="movie-metadata">
-//               {movie.adult ? <div className="symbol-box">A</div> : <div className="symbol-box">UA</div>}
-//               <p className="release-date">{movie.release_date}</p>
-//               <p className="genres">{movie.genres.map((genre: any) => genre.name).join(', ')}</p>
-//               <p className="duration">{movie.runtime} min</p>
-//             </div>
-//             <div className="user-score">
-//               <p>User Score</p>
-//               <div className="icons">
-//                 <span>Add to List</span>
-//                 <span>Mark as Favorite</span>
-//                 <span>Add to Watchlist</span>
-//                 <span>Rate it</span>
-//                 <span>Play Trailer</span>
-//               </div>
-//             </div>
-//             <p className="tagline">{movie.tagline}</p>
-//             <p className="overview">{movie.overview}</p>
-//             <div className="credits">
-//               <div className="characters">
-//                 <p>Characters:</p>
-//                 <ul>
-//                   {movie.credits.cast.slice(0, 5).map((cast: any) => (
-//                     <li key={cast.id}>{cast.name}</li>
-//                   ))}
-//                 </ul>
-//               </div>
-//               <div className="directors">
-//                 <p>Directors:</p>
-//                 <ul>
-//                   {movie.credits.crew
-//                     .filter((crew: any) => crew.job === 'Director')
-//                     .map((director: any) => (
-//                       <li key={director.id}>{director.name}</li>
-//                     ))}
-//                 </ul>
-//               </div>
-//               <div className="writers">
-//                 <p>Writers:</p>
-//                 <ul>
-//                   {movie.credits.crew
-//                     .filter((crew: any) => crew.job === 'Writer')
-//                     .map((writer: any) => (
-//                       <li key={writer.id}>{writer.name}</li>
-//                     ))}
-//                 </ul>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="movie-details-section">
-//         <div className="top-billed-cast-section">
-//           <h2>Top Billed Cast</h2>
-//           <div className="cast-photos">
-//             {movie.credits.cast.slice(0, 6).map((cast: any) => (
-//               <div className="cast-card" key={cast.id}>
-//                 <img className="cast-photo" src={`https://image.tmdb.org/t/p/w300${cast.profile_path}`} alt={cast.name} />
-//                 <p className="cast-name">{cast.name}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//         <div className="additional-section">
-//           <div className="section">
-//             <h3>Status</h3>
-//             <p>{movie.status}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Original Language</h3>
-//             <p>{movie.original_language}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Budget</h3>
-//             <p>${movie.budget.toLocaleString()}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Revenue</h3>
-//             <p>${movie.revenue.toLocaleString()}</p>
-//           </div>
-//         </div>
-//       </div>
-//       {/* <PageFooter /> */} - Commented out, not being used
-//     </div>
-//   );
-// };
+  const {
+    title,
+    release_date,
+    first_air_date,
+    vote_average,
+    poster_path,
+    backdrop_path,
+    tagline,
+    overview,
+    status,
+    originalLanguage,
+    budget,
+    revenue,
+    number_of_episodes,
+    number_of_seasons,
+  } = movieDetails;
 
-// export default MovieDetailPage{};
-export{};
+  const backgroundImage = `url(https://image.tmdb.org/t/p/original${backdrop_path})`;
+
+  return (
+    <div className="movie-detail-page">
+      <div className="banner" style={{ backgroundImage }}>
+        <div className="movie-poster">
+          <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="Movie Poster" />
+        </div>
+        <div className="movie-details">
+          <h1>{`${title} (${release_date || first_air_date})`}</h1>
+          <div className="symbol-box">
+            {mediaType === 'movie' && <span>{'A'}</span>}
+            {mediaType === 'tv' && <span>{'UA'}</span>}
+          </div>
+          <p>{`${vote_average}/10`}</p>
+          {/* Add icons and functionality for add to list, mark as favorite, add to watchlist, rate it, and play trailer */}
+          <p>{tagline}</p>
+          <p>{overview}</p>
+          <p>{`Status: ${status}`}</p>
+          <p>{`Original Language: ${originalLanguage}`}</p>
+          <p>{`Budget: $${budget}`}</p>
+          <p>{`Revenue: $${revenue}`}</p>
+          {mediaType === 'tv' && <p>{`Number of Episodes: ${number_of_episodes}`}</p>}
+          {mediaType === 'tv' && <p>{`Number of Seasons: ${number_of_seasons}`}</p>}
+        </div>
+      </div>
+      <div className="top-billed-cast">
+        <h2>Top Billed Cast</h2>
+        {/* Render photo cards of artists with their names below */}
+      </div>
+      <div className="section">
+        <h2>Section Heading</h2>
+        {/* Render section content */}
+      </div>
+      <footer className="footer">
+      <Link to="/">Go back to Home Page</Link>
+      </footer>
+    </div>
+  );
+};
+
+export default MovieDetailPage;
+

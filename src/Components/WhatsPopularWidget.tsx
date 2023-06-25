@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { posterCards, fetchPopular, fetchMovieDetails } from '../Services/Api';
+import { posterCards, fetchPopular } from '../Services/Api';
 import '../Styles/WhatsPopularWidget.css';
 
 const WhatsPopularWidget: React.FunctionComponent = () => {
