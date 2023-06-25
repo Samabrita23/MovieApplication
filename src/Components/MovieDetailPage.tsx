@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link} from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { fetchMovieDetails, fetchTvDetails } from '../Services/Api';
 import '../Styles/MovieDetailPage.css';
 
@@ -30,6 +30,7 @@ interface MovieDetails {
 const MovieDetailPage: React.FC<MovieDetailPageProps> = ({ mediaType }) => {
   const { id } = useParams<{ id: string }>();
   const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
+  const [genres, setGenres] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -48,6 +49,28 @@ const MovieDetailPage: React.FC<MovieDetailPageProps> = ({ mediaType }) => {
 
     fetchDetails();
   }, [id, mediaType]);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        // Fetch genre list from API based on genre_ids
+        const response = await fetch(
+          `https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=7f2bf16398d509aab86dbd7043d159c1&language=en-US`
+        );
+        const data = await response.json();
+        const genreMap: { [key: number]: string } = {};
+        data.genres.forEach((genre: { id: number; name: string }) => {
+          genreMap[genre.id] = genre.name;
+        });
+        const movieGenres = movieDetails?.genre_ids.map((id: number) => genreMap[id]);
+        setGenres(movieGenres || []);
+      } catch (error) {
+        console.log('Error fetching genres:', error);
+      }
+    };
+
+    fetchGenres();
+  }, [mediaType, movieDetails]);
 
   if (!movieDetails) {
     return <div>Loading...</div>;
@@ -72,44 +95,59 @@ const MovieDetailPage: React.FC<MovieDetailPageProps> = ({ mediaType }) => {
 
   const backgroundImage = `url(https://image.tmdb.org/t/p/original${backdrop_path})`;
 
+  const getFullLanguage = (languageCode: string) => {
+    switch (languageCode) {
+      case 'es':
+        return 'Spanish';
+      case 'fr':
+        return 'French';
+        case 'en':
+      return 'English';
+      default:
+        return languageCode;
+
+    }
+  };
+
+  const getYearFromReleaseDate = (date: string) => {
+    if (date) {
+      const year = new Date(date).getFullYear();
+      return year.toString();
+    }
+    return '';
+  };
+  
+
   return (
     <div className="movie-detail-page">
       <div className="banner" style={{ backgroundImage }}>
-        <div className="movie-poster">
+      
+        <div className="moviePoster">
           <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="Movie Poster" />
         </div>
-        <div className="movie-details">
-          <h1>{`${title} (${release_date || first_air_date})`}</h1>
-          <div className="symbol-box">
-            {mediaType === 'movie' && <span>{'A'}</span>}
-            {mediaType === 'tv' && <span>{'UA'}</span>}
-          </div>
+        <div className="movieDetails">
+          <h1>{`${title} (${getYearFromReleaseDate(
+              mediaType === 'movie' ? release_date : first_air_date
+             )})`}</h1>
+          <div className="symbol-box">{mediaType === 'movie' ? 'A' : 'UA'}</div>
           <p>{`${vote_average}/10`}</p>
-          {/* Add icons and functionality for add to list, mark as favorite, add to watchlist, rate it, and play trailer */}
+          <p>{genres.join(', ')}</p>
           <p>{tagline}</p>
-          <p>{overview}</p>
+          <p className="overview">{overview}</p>
           <p>{`Status: ${status}`}</p>
-          <p>{`Original Language: ${originalLanguage}`}</p>
+          <p>{`Language: ${getFullLanguage(originalLanguage)}`}</p>
           <p>{`Budget: $${budget}`}</p>
           <p>{`Revenue: $${revenue}`}</p>
           {mediaType === 'tv' && <p>{`Number of Episodes: ${number_of_episodes}`}</p>}
           {mediaType === 'tv' && <p>{`Number of Seasons: ${number_of_seasons}`}</p>}
         </div>
       </div>
-      <div className="top-billed-cast">
-        <h2>Top Billed Cast</h2>
-        {/* Render photo cards of artists with their names below */}
-      </div>
-      <div className="section">
-        <h2>Section Heading</h2>
-        {/* Render section content */}
-      </div>
+
       <footer className="footer">
-      <Link to="/">Go back to Home Page</Link>
+        <Link to="/">Go back to Home Page</Link>
       </footer>
     </div>
   );
 };
 
 export default MovieDetailPage;
-

@@ -23,15 +23,20 @@ export const fetchTrending = async (toggle: string): Promise<posterCards[]> => {
     );
     const data = await response.json();
 
+
     const modifiedData: posterCards[] = data.results.map((movie: posterCards) => {
       if (movie.media_type === 'tv') {
         return {
           ...movie,
           title: movie.name,
           release_date: movie.first_air_date,
+          media_type: 'tv',
         };
       }
-      return movie;
+      return {
+        ...movie,
+        media_type: 'movie',
+      };
     });
 
     return modifiedData;
@@ -79,9 +84,13 @@ export const fetchFree = async (criteria: string, selectedToggle: string): Promi
           ...movie,
           title: movie.name,
           release_date: movie.first_air_date,
+          media_type: 'tv',
         };
       }
-      return movie;
+      return {
+        ...movie,
+        media_type: 'movie',
+      };
     });
 
     return modifiedData;
@@ -98,6 +107,7 @@ export const fetchMovieDetails = async (movieId: string | number): Promise<any> 
       `https://api.themoviedb.org/3/movie/${id}?append_to_response=release_dates&language=en-US&api_key=${apiKey}`
     );
     const data = await response.json();
+    console.log(data);
 
     const movieDetails = {
       id: data.id,

@@ -1,34 +1,53 @@
-/* MovieDetailPage.css */
-
 .movie-detail-page {
   background-color: #f5f5f5;
-  padding: 20px;
+  padding: 20px; 
+  font-family: sans-serif;
+  color: #fff;
+  font-style: bold;
+  font-weight: 400px;
 }
 
 .banner {
   position: relative;
-  height: 400px;
+  display: flex;
+  height: 100px;
   background-size: cover;
   background-position: center;
   margin-bottom: 20px;
+  border-radius: 15px;
 }
 
-.movie-poster {
+.moviePoster {
   position: absolute;
+  flex: 1;
   top: 50%;
   left: 20px;
   transform: translateY(-50%);
 }
 
-.movie-poster img {
-  width: 200px;
-  height: auto;
+.moviePoster img {
+  width: auto;
+  height: 25rem;
+  border-radius: 15px;
 }
 
-.movie-details {
+.movieDetails {
+  display: flex;
+  flex: 6;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
   padding: 20px;
-  background-color: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-weight: 500px;
+  border-radius: 15px;
+  margin-left: 14rem;
+  box-shadow: 0px 2px 4px rgba(109, 97, 97, 0.1);
+}
+
+.overview {
+  margin: 0 5rem 0 5rem;
 }
 
 .symbol-box {
@@ -38,26 +57,7 @@
   margin-right: 10px;
   font-weight: bold;
   font-size: 14px;
-}
-
-.top-billed-cast {
-  margin-bottom: 20px;
-}
-
-.top-billed-cast h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.section {
-  margin-bottom: 20px;
-}
-
-.section h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  color: black;
 }
 
 .footer {
@@ -69,12 +69,48 @@
 
 /* Media Queries */
 
+@media (min-width: 320px) and (max-width: 480px) {
+  .banner {
+    height: 200px;
+  }
+
+  .moviePoster {
+    left: 10px;
+  }
+
+  .moviePoster img {
+    height: 15rem;
+  }
+
+  .movieDetails {
+    margin-left: 5px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .banner {
+    height: 300px;
+  }
+
+  .moviePoster {
+    left: 15px;
+  }
+
+  .moviePoster img {
+    height: 20rem;
+  }
+
+  .movieDetails {
+    margin-left: 10px;
+  }
+}
+
 @media (min-width: 768px) {
   .banner {
     height: 500px;
   }
 
-  .movie-poster img {
+  .moviePoster img {
     width: 250px;
   }
 }

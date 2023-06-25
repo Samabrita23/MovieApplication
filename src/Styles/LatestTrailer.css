@@ -70,6 +70,7 @@
   overflow-x: auto;
   padding-bottom: 20px;
   margin: 6px 7px;
+  height: 350px;
   /* display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 20px; */
@@ -247,29 +248,3 @@
   }
 }
 
-@media only screen and (min-width: 481px) and (max-width: 768px) {
-  .latest-trailers {
-    margin-left: 2rem;
-    margin-right: 2rem;
-  }
-  
-  .trailers-container {
-    margin: 6px 7px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    grid-gap: 20px;
-  }
-  
-  .card {
-    min-width: 160px;
-    height: 14rem;
-    margin-right: 20px;
-    left: auto;
-    transform: none;
-  }
-  
-  .modal iframe {
-    width: 100%;
-    height: 400px;
-  }
-}
