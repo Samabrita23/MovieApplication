@@ -1,140 +1,153 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { fetchMovieDetails } from '../Services/TrendingApi';
-// import PageHeader from './PageHeader';
-// // import PageFooter from './PageFooter'; - Commented out, not being used
-// import '../Styles/MovieDetailPage.css';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { fetchMovieDetails, fetchTvDetails } from '../Services/Api';
+import '../Styles/MovieDetailPage.css';
 
-// interface MovieDetailParams {
-//   movieId: string;
-//   [key: string]: string | undefined;
-// }
+interface MovieDetailPageProps {
+  mediaType: string;
+}
 
-// const MovieDetailPage: React.FunctionComponent = () => {
-//   // Extract the "movieId" from the URL parameters using the "useParams" hook
-//   const { movieId } = useParams<MovieDetailParams>();
+interface MovieDetails {
+  id: number;
+  title: string;
+  release_date: string;
+  first_air_date: string;
+  vote_average: number;
+  poster_path: string;
+  backdrop_path: string;
+  media_type: string;
+  genre_ids: number[];
+  tagline: string;
+  overview: string;
+  status: string;
+  originalLanguage: string;
+  budget: number;
+  revenue: number;
+  number_of_episodes: number;
+  number_of_seasons: number;
+}
 
-//   // State to store the movie data
-//   const [movie, setMovie] = useState<any>(null);
+const MovieDetailPage: React.FC<MovieDetailPageProps> = ({ mediaType }) => {
+  const { id } = useParams<{ id: string }>();
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
+  const [genres, setGenres] = useState<string[]>([]);
 
-//   useEffect(() => {
-//     // Fetch the movie details when the component mounts
-//     fetchMovie();
-//   }, []);
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        let details: MovieDetails | null = null;
+        if (mediaType === 'movie') {
+          details = await fetchMovieDetails(id || '');
+        } else if (mediaType === 'tv') {
+          details = await fetchTvDetails(id || '');
+        }
+        setMovieDetails(details);
+      } catch (error) {
+        console.log('Error fetching movie details:', error);
+      }
+    };
 
-//   const fetchMovie = async () => {
-//     try {
-//       if (movieId) {
-//         const data = await fetchMovieDetails(movieId);
-//         setMovie(data);
-//       }
-//     } catch (error) {
-//       console.log('Error fetching movie details:', error);
-//     }
-//   };
+    fetchDetails();
+  }, [id, mediaType]);
 
-//   // If movie data is not available, show a loading message
-//   if (!movie) {
-//     return <div>Loading...</div>;
-//   }
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        // Fetch genre list from API based on genre_ids
+        const response = await fetch(
+          `https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=7f2bf16398d509aab86dbd7043d159c1&language=en-US`
+        );
+        const data = await response.json();
+        const genreMap: { [key: number]: string } = {};
+        data.genres.forEach((genre: { id: number; name: string }) => {
+          genreMap[genre.id] = genre.name;
+        });
+        const movieGenres = movieDetails?.genre_ids.map((id: number) => genreMap[id]);
+        setGenres(movieGenres || []);
+      } catch (error) {
+        console.log('Error fetching genres:', error);
+      }
+    };
 
-//   // Render the movie details
-//   return (
-//     <div className="movie-detail-page">
-//       <PageHeader />
-//       <div className="movie-banner" style={{ backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})` }}>
-//         <div className="movie-details">
-//           <div className="movie-poster-card">
-//             <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
-//           </div>
-//           <div className="movie-info">
-//             <h1 className="movie-title">{movie.title} ({movie.release_date.substring(0, 4)})</h1>
-//             <div className="movie-metadata">
-//               {movie.adult ? <div className="symbol-box">A</div> : <div className="symbol-box">UA</div>}
-//               <p className="release-date">{movie.release_date}</p>
-//               <p className="genres">{movie.genres.map((genre: any) => genre.name).join(', ')}</p>
-//               <p className="duration">{movie.runtime} min</p>
-//             </div>
-//             <div className="user-score">
-//               <p>User Score</p>
-//               <div className="icons">
-//                 <span>Add to List</span>
-//                 <span>Mark as Favorite</span>
-//                 <span>Add to Watchlist</span>
-//                 <span>Rate it</span>
-//                 <span>Play Trailer</span>
-//               </div>
-//             </div>
-//             <p className="tagline">{movie.tagline}</p>
-//             <p className="overview">{movie.overview}</p>
-//             <div className="credits">
-//               <div className="characters">
-//                 <p>Characters:</p>
-//                 <ul>
-//                   {movie.credits.cast.slice(0, 5).map((cast: any) => (
-//                     <li key={cast.id}>{cast.name}</li>
-//                   ))}
-//                 </ul>
-//               </div>
-//               <div className="directors">
-//                 <p>Directors:</p>
-//                 <ul>
-//                   {movie.credits.crew
-//                     .filter((crew: any) => crew.job === 'Director')
-//                     .map((director: any) => (
-//                       <li key={director.id}>{director.name}</li>
-//                     ))}
-//                 </ul>
-//               </div>
-//               <div className="writers">
-//                 <p>Writers:</p>
-//                 <ul>
-//                   {movie.credits.crew
-//                     .filter((crew: any) => crew.job === 'Writer')
-//                     .map((writer: any) => (
-//                       <li key={writer.id}>{writer.name}</li>
-//                     ))}
-//                 </ul>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//       <div className="movie-details-section">
-//         <div className="top-billed-cast-section">
-//           <h2>Top Billed Cast</h2>
-//           <div className="cast-photos">
-//             {movie.credits.cast.slice(0, 6).map((cast: any) => (
-//               <div className="cast-card" key={cast.id}>
-//                 <img className="cast-photo" src={`https://image.tmdb.org/t/p/w300${cast.profile_path}`} alt={cast.name} />
-//                 <p className="cast-name">{cast.name}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//         <div className="additional-section">
-//           <div className="section">
-//             <h3>Status</h3>
-//             <p>{movie.status}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Original Language</h3>
-//             <p>{movie.original_language}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Budget</h3>
-//             <p>${movie.budget.toLocaleString()}</p>
-//           </div>
-//           <div className="section">
-//             <h3>Revenue</h3>
-//             <p>${movie.revenue.toLocaleString()}</p>
-//           </div>
-//         </div>
-//       </div>
-//       {/* <PageFooter /> */} - Commented out, not being used
-//     </div>
-//   );
-// };
+    fetchGenres();
+  }, [mediaType, movieDetails]);
 
-// export default MovieDetailPage{};
-export{};
+  if (!movieDetails) {
+    return <div>Loading...</div>;
+  }
+
+  const {
+    title,
+    release_date,
+    first_air_date,
+    vote_average,
+    poster_path,
+    backdrop_path,
+    tagline,
+    overview,
+    status,
+    originalLanguage,
+    budget,
+    revenue,
+    number_of_episodes,
+    number_of_seasons,
+  } = movieDetails;
+
+  const backgroundImage = `url(https://image.tmdb.org/t/p/original${backdrop_path})`;
+
+  const getFullLanguage = (languageCode: string) => {
+    switch (languageCode) {
+      case 'es':
+        return 'Spanish';
+      case 'fr':
+        return 'French';
+        case 'en':
+      return 'English';
+      default:
+        return languageCode;
+
+    }
+  };
+
+  const getYearFromReleaseDate = (date: string) => {
+    if (date) {
+      const year = new Date(date).getFullYear();
+      return year.toString();
+    }
+    return '';
+  };
+  
+
+  return (
+    <div className="movie-detail-page">
+      <div className="banner" style={{ backgroundImage }}>
+      
+        <div className="moviePoster">
+          <img src={`https://image.tmdb.org/t/p/w500${poster_path}`} alt="Movie Poster" />
+        </div>
+        <div className="movieDetails">
+          <h1>{`${title} (${getYearFromReleaseDate(
+              mediaType === 'movie' ? release_date : first_air_date
+             )})`}</h1>
+          <div className="symbol-box">{mediaType === 'movie' ? 'A' : 'UA'}</div>
+          <p>{`${vote_average}/10`}</p>
+          <p>{genres.join(', ')}</p>
+          <p>{tagline}</p>
+          <p className="overview">{overview}</p>
+          <p>{`Status: ${status}`}</p>
+          <p>{`Language: ${getFullLanguage(originalLanguage)}`}</p>
+          <p>{`Budget: $${budget}`}</p>
+          <p>{`Revenue: $${revenue}`}</p>
+          {mediaType === 'tv' && <p>{`Number of Episodes: ${number_of_episodes}`}</p>}
+          {mediaType === 'tv' && <p>{`Number of Seasons: ${number_of_seasons}`}</p>}
+        </div>
+      </div>
+
+      <footer className="footer">
+        <Link to="/">Go back to Home Page</Link>
+      </footer>
+    </div>
+  );
+};
+
+export default MovieDetailPage;

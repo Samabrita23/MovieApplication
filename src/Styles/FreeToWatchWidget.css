@@ -34,8 +34,8 @@
     justify-content: flex-start;
     align-items: stretch;
     align-content: center;
-    background-color:#a9a1d8;
-    border:4px solid #490cf7;
+    background-color: #a9a1d8;
+    border: 4px solid #490cf7;
     border-radius: 18px;
   }
   
@@ -43,8 +43,8 @@
     font-size: 18px;
     font-weight: 700;
     padding: 5px 15px;
-    background-color:#a9a1d8 ;
-    border: 2px solid #a9a1d8 ;
+    background-color: #a9a1d8;
+    border: 2px solid #a9a1d8;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -65,6 +65,7 @@
     padding-bottom: 20px;
     padding-left: 40px;
     width: 100%;
+    height: 400px;
     max-width: 100%;
   }
   
@@ -121,5 +122,64 @@
     font-weight: 400;
     color: #000000;
     font-size: 15px;
+  }
+  
+  /* Media queries for different screen sizes */
+  
+  /* Mobile devices */
+  @media only screen and (max-width: 480px) {
+    .free-to-watch-widget {
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+  
+    .freeHeader {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-bottom: 1rem;
+      padding-left: 0.5rem;
+    }
+  
+    .freeHeader h2 {
+      font-size: 20px;
+      margin-right: 0;
+      margin-bottom: 0.5rem;
+    }
+  
+    .freeHeader-buttons {
+      justify-content: flex-start;
+    }
+  
+    .freeHeader-button {
+      font-size: 15px;
+      padding: 5px 10px;
+    }
+  
+    .freeBody {
+      padding-left: 0.5rem;
+    }
+  
+    .freeCard {
+      margin-right: 10px;
+      width: 8rem;
+      height: 12rem;
+    }
+  }
+  
+  /* iPads, Tablets */
+  @media only screen and (min-width: 481px) and (max-width: 768px) {
+    .free-to-watch-widget {
+      margin-left: 2rem;
+      margin-right: 2rem;
+    }
+  
+    .freeHeader h2 {
+      font-size: 22px;
+    }
+  
+    .freeCard {
+      width: 10rem;
+      height: 14rem;
+    }
   }
   

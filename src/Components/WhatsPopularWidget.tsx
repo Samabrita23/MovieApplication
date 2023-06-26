@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { posterCards, fetchPopular, fetchMovieDetails } from '../Services/Api';
+import { posterCards, fetchPopular } from '../Services/Api';
 import '../Styles/WhatsPopularWidget.css';
 
 const WhatsPopularWidget: React.FunctionComponent = () => {
@@ -19,7 +19,7 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
     // Determine the API endpoint based on the selected toggle
     if (toggle === 'streaming') {
       criteria =
-        'discover/movie?include_video=true&release_date.lte=2023&sort_by=popularity.desc&language=en-US&watch_region=US&api_key=7f2bf16398d509aab86dbd7043d159c1&with_watch_monetization_types=flatrate';
+        'discover/movie?include_video=true&release_date.lte=2023&sort_by=popularity.desc&language=en-US&with_watch_monetization_types=flatrate';
     } else if (toggle === 'onTv') {
       criteria = 'tv/on_the_air?api_key=7f2bf16398d509aab86dbd7043d159c1';
     } else if (toggle === 'forRent') {
@@ -89,20 +89,22 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
       </div>
       <div className="itemCards">
         {movies.map((movie) => (
-        <React.Fragment key={movie.id}>
-          <Link to={`/movies/${movie.id}`} key={movie.id} className="itemCard">
+        
+          <div className= "itemCard" key={movie.id}>
+          <Link to={`/movies/${movie.id}`} >
             <img
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={movie.title}
               className="itemPoster"
             />
+            </Link>
             <div className="movieInfo">
               <p>User Score: {calculateVotePercentage(movie.vote_average)}</p>
               <h3>{movie.title}</h3>
               <p>{formatReleaseDate(movie.release_date)}</p>
             </div>
-          </Link>
-          </React.Fragment>
+          
+          </div>
         ))}
       </div>
     </div>

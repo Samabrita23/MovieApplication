@@ -1,142 +1,116 @@
-/* MovieDetailPage.css */
-
 .movie-detail-page {
-    background-color: #fff;
+  background-color: #f5f5f5;
+  padding: 20px; 
+  font-family: sans-serif;
+  color: #fff;
+  font-style: bold;
+  font-weight: 400px;
+}
+
+.banner {
+  position: relative;
+  display: flex;
+  height: 100px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 20px;
+  border-radius: 15px;
+}
+
+.moviePoster {
+  position: absolute;
+  flex: 1;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+}
+
+.moviePoster img {
+  width: auto;
+  height: 25rem;
+  border-radius: 15px;
+}
+
+.movieDetails {
+  display: flex;
+  flex: 6;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: left;
+  padding: 20px;
+  color: #fff;
+  font-weight: 500px;
+  border-radius: 15px;
+  margin-left: 14rem;
+  box-shadow: 0px 2px 4px rgba(109, 97, 97, 0.1);
+}
+
+.overview {
+  margin: 0 5rem 0 5rem;
+}
+
+.symbol-box {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #eaeaea;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: black;
+}
+
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #888888;
+  font-size: 12px;
+}
+
+/* Media Queries */
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .banner {
+    height: 200px;
   }
-  
-  .movie-banner {
+
+  .moviePoster {
+    left: 10px;
+  }
+
+  .moviePoster img {
+    height: 15rem;
+  }
+
+  .movieDetails {
+    margin-left: 5px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .banner {
+    height: 300px;
+  }
+
+  .moviePoster {
+    left: 15px;
+  }
+
+  .moviePoster img {
+    height: 20rem;
+  }
+
+  .movieDetails {
+    margin-left: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .banner {
     height: 500px;
-    background-position: center;
-    background-size: cover;
-    display: flex;
-    align-items: flex-end;
-    padding: 20px;
   }
-  
-  .movie-poster-card {
-    width: 300px;
-    margin-right: 20px;
+
+  .moviePoster img {
+    width: 250px;
   }
-  
-  .movie-poster {
-    width: 100%;
-    height: auto;
-  }
-  
-  .movie-info {
-    flex-grow: 1;
-    color: #fff;
-  }
-  
-  /* .movie-title {
-    font-size: 32px;
-    margin-bottom: 10px;
-  } */
-  
-  .movie-metadata {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .symbol-box {
-    display: inline-block;
-    background-color: #000;
-    color: #fff;
-    padding: 5px 10px;
-    margin-right: 10px;
-  }
-  
-  .release-date,
-  .genres,
-  .duration {
-    margin-right: 10px;
-  }
-  
-  .user-score {
-    margin-bottom: 10px;
-  }
-  
-  .icons {
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-  }
-  
-  .icons span {
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .tagline {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .overview {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .credits {
-    margin-top: 20px;
-    display: flex;
-  }
-  
-  .characters,
-  .directors,
-  .writers {
-    flex-grow: 1;
-  }
-  
-  .credits p {
-    font-weight: bold;
-  }
-  
-  .credits ul {
-    margin: 0;
-    padding-left: 20px;
-    list-style-type: disc;
-  }
-  
-  .cast-photos {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 10px;
-  }
-  
-  .cast-card {
-    width: 150px;
-    margin-right: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .cast-photo {
-    width: 100%;
-    height: auto;
-  }
-  
-  .cast-name {
-    margin-top: 5px;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  .additional-section {
-    display: flex;
-    margin-top: 20px;
-  }
-  
-  .section {
-    flex-grow: 1;
-  }
-  
-  .section h3 {
-    margin-bottom: 10px;
-  }
-  
-  .page-footer {
-    background-color: #f2f2f2;
-    padding: 20px;
-  }
-  
+}

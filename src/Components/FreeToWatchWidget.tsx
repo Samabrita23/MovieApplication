@@ -71,7 +71,7 @@ const FreeToWatchWidget: React.FunctionComponent = () => {
       <div className="freeBody">
         {movies.map((movie) => (
           <div className="freeCard" key={movie.id}>
-            <Link to={`/movie/${movie.id}`} className="movie-poster">
+            <Link to={`/movie/${movie.id}`} >
               <div className="freeCard-image">
                 <img
                   className="freeCard-image"
