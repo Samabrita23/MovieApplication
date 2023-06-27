@@ -1,6 +1,8 @@
 # This is a movie application app 
 
-Welcome to the Movie Application! This user-friendly application allows you to explore movies, watch trailers, and stay up-to-date with the latest releases. Built with React, TypeScript, and CSS, this application offers a seamless and enjoyable movie browsing experience. Follow the step-by-step guide below to get started.
+Welcome to the Movie Application! This user-friendly application allows you to explore movies, watch trailers, and stay up-to-date with the latest releases. Built with React, TypeScript, and CSS, this application offers a seamless and enjoyable movie browsing experience. Follow the step-by-step guide below to get started. 
+
+https://movie-application-seven.vercel.app/
 
 ## Step-by-Step Guide
 
