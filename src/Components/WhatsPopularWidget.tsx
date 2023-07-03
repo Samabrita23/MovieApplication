@@ -91,11 +91,12 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
         {movies.map((movie) => (
         
           <div className= "itemCard" key={movie.id}>
-          <Link to={`/movies/${movie.id}`} >
+          <Link to={`/${movie.media_type === 'tv' ? 'tv' : 'movie'}/${movie.id}`} >
             <img
+               className="itemPoster"
               src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
               alt={movie.title}
-              className="itemPoster"
+              
             />
             </Link>
             <div className="movieInfo">
@@ -110,5 +111,4 @@ const WhatsPopularWidget: React.FunctionComponent = () => {
     </div>
   );
 };
-
 export default WhatsPopularWidget;

@@ -69,7 +69,7 @@ const TrendingWidget: React.FunctionComponent = () => {
         {movies.map((movie) => (
           <div className= "movie-card" key={movie.id}>
             {/* Link to the movie details page */}
-            <Link to={`/movie/${movie.id}`} >
+            <Link to={`/${movie.media_type === 'tv' ? 'tv' : 'movie'}/${movie.id}`} >
               {/* Movie poster image */}
               <img
                 className="trendingImage"

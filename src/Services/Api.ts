@@ -12,6 +12,7 @@ export interface posterCards {
   poster_path: string;
   media_type: string;
   genre_ids: number[];
+  trailerAvailable: boolean;
 }
 
 export const fetchTrending = async (toggle: string): Promise<posterCards[]> => {
@@ -59,9 +60,13 @@ export const fetchPopular = async (criteria: string, toggle: string): Promise<po
           ...movie,
           title: movie.name,
           release_date: movie.first_air_date,
+          media_type: 'tv',
         };
       }
-      return movie;
+      return {
+        ...movie,
+        media_type: 'movie',
+      }
     });
 
     return modifiedData;

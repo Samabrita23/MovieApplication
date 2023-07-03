@@ -1,5 +1,3 @@
-/* LatestTrailer.css */
-
 .latest-trailers {
   display: flex;
   flex-direction: column;
@@ -7,7 +5,7 @@
   align-content: flex-start;
   border-radius: 15px;
   background: #230B72;
-  width: 100%;
+  width: 90%;
   padding-top: 3rem;
   font-family: sans-serif;
   margin-left: 3rem;
@@ -69,11 +67,8 @@
   justify-content: flex-start;
   overflow-x: auto;
   padding-bottom: 20px;
-  margin: 6px 7px;
-  height: 350px;
-  /* display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 20px; */
+  margin: 6px 10px;
+  height: 400px;
 }
 
 .card {
@@ -86,7 +81,6 @@
   margin-right: 20px;
   width: 5rem; 
   height: 15rem;
-  left: 90px;
   background: #e6daf9;
   border-radius: 15px;
 }
@@ -204,14 +198,30 @@
   height: 100%;
 }
 
-@media only screen and (max-width: 480px) {
+/* Mobile devices (320px - 480px) */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
   .latest-trailers {
     margin-left: 1rem;
     margin-right: 1rem;
   }
+
+  .section-heading{
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 1rem;
+    padding-left: 0.5rem;
+  }
+  .section-heading h2{
+    font-size: 18px;
+    margin-bottom: 0.5rem;
+  }
+
+  .latestToggle-button{
+    font-size: 15px;
+    padding: 5px 10px;
+  }
   
   .trailers-container {
-    margin: 6px 7px;
     overflow-x: scroll;
     overflow-y: scroll;
     scroll-snap-type: x mandatory;
@@ -248,3 +258,46 @@
   }
 }
 
+/* iPads, Tablets (481px - 768px) */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  .latest-trailers {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .trailers-container {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 10px;
+  }
+
+  .card {
+    min-width: 150px;
+    height: 12rem;
+    margin-right: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .card-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-inner img {
+    width: 100%;
+    height: auto;
+  }
+
+  .cardTitle {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .modal iframe {
+    width: 100%;
+    height: 350px;
+  }
+}

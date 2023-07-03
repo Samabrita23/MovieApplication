@@ -16,7 +16,7 @@ function HomePage() {
       <WelcomeBanner />
       <TrendingWidget />
       <LatestTrailers />
-      <WhatsPopularWidget />
+      <WhatsPopularWidget/>
       <FreeToWatchWidget />
     </div>
   );

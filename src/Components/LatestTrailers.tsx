@@ -51,7 +51,7 @@ const LatestTrailers: React.FC = () => {
     // Fetch video details based on the media type (movie or tv)
     if (mediaType === 'movie') {
       const videos = await fetchVideoDetails(id, 'movie');
-      const trailerVideo = videos.find((video) => video.type === 'Trailer' && video.site === 'YouTube');
+      const trailerVideo = videos.find((video: any) => video.type === 'Trailer' && video.site === 'YouTube');
       if (trailerVideo) {
         videoKey = trailerVideo.key;
       }
@@ -74,7 +74,7 @@ const LatestTrailers: React.FC = () => {
 
   // Handle modal window open/close
   const handleModalOpen = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen((prevIsModalOpen) => !prevIsModalOpen);
   };
 
   // Render the list of trailers
@@ -132,6 +132,7 @@ const LatestTrailers: React.FC = () => {
           </button>
         </div>
       </div>
+      
       {renderTrailers()}
       {isModalOpen && (
         <div className="modal">
@@ -156,3 +157,4 @@ const LatestTrailers: React.FC = () => {
 };
 
 export default LatestTrailers;
+
